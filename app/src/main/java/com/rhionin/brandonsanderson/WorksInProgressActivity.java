@@ -29,7 +29,7 @@ import java.io.IOException;
 
 public class WorksInProgressActivity extends AppCompatActivity {
 
-    private static final String PROGRESS_URL = "http://www.brandonsanderson.com";
+    private static final String PROGRESS_URL = "https://www.brandonsanderson.com";
     private static final String TAG = "WorksInProgressActivity";
 
     public static String PROGRESS_TOPIC = "/topics/progress";

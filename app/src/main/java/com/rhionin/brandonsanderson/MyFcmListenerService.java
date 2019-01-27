@@ -11,24 +11,22 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.android.gms.gcm.GcmListenerService;
-
-import com.rhionin.brandonsanderson.R;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Map;
 
 import static com.rhionin.brandonsanderson.WorksInProgressActivity.PROGRESS_TOPIC;
 import static com.rhionin.brandonsanderson.WorksInProgressActivity.WIPS_CACHE_FILE;
 import static com.rhionin.brandonsanderson.WorksInProgressActivity.WIPS_UPDATED;
 import static com.rhionin.brandonsanderson.WorksInProgressActivity.WORKS_IN_PROGRESS;
 
-public class MyGcmListenerService extends GcmListenerService {
+public class MyFcmListenerService extends FirebaseMessagingService {
 
-    private static final String TAG = "MyGcmListenerService";
+    private static final String TAG = "MyFcmListenerService";
 
     /**
      * Called when message is received.
@@ -39,7 +37,9 @@ public class MyGcmListenerService extends GcmListenerService {
      */
     // [START receive_message]
     @Override
-    public void onMessageReceived(String from, Bundle data) {
+    public void onMessageReceived(RemoteMessage message) {
+        String from = message.getFrom();
+        Map data = message.getData();
         if (from.equals(PROGRESS_TOPIC)) {
             try {
                 File wipsCache = new File(getCacheDir(), WIPS_CACHE_FILE);
@@ -47,7 +47,8 @@ public class MyGcmListenerService extends GcmListenerService {
                     wipsCache.createNewFile();
                 }
 
-                String wipsStr = data.getString(WORKS_IN_PROGRESS);
+                String wipsStr = data.get(WORKS_IN_PROGRESS).toString();
+                Log.d(TAG, "wipsStr: " + wipsStr);
                 FileOutputStream outputStream = new FileOutputStream(wipsCache);
                 outputStream.write(wipsStr.getBytes());
                 outputStream.close();

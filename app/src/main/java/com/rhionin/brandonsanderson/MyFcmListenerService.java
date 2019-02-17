@@ -5,9 +5,9 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
+import static com.rhionin.brandonsanderson.ProgressService.WORKS_IN_PROGRESS;
 import static com.rhionin.brandonsanderson.RegistrationIntentService.DEV_PROGRESS_TOPIC;
 import static com.rhionin.brandonsanderson.RegistrationIntentService.PROGRESS_TOPIC;
-import static com.rhionin.brandonsanderson.WorksInProgressActivity.WORKS_IN_PROGRESS;
 
 public class MyFcmListenerService extends FirebaseMessagingService {
 

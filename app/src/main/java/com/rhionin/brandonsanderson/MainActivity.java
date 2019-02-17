@@ -10,14 +10,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import com.rhionin.brandonsanderson.R;
+import static com.rhionin.brandonsanderson.ProgressService.WORKS_IN_PROGRESS;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         // Receive progress update payload when notification came while app was in the background
         // See https://firebase.google.com/docs/cloud-messaging/android/receive#handling_messages
         if (getIntent().getExtras() != null) {
-            String wipsStr = getIntent().getExtras().getString("worksInProgress");
+            String wipsStr = getIntent().getExtras().getString(WORKS_IN_PROGRESS);
             if (wipsStr != null) {
                 ProgressService.setWorksInProgress(this, wipsStr);
             }

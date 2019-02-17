@@ -15,13 +15,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static com.rhionin.brandonsanderson.WorksInProgressActivity.WIPS_UPDATED;
-
 public class ProgressService {
 
     private static final String TAG = "ProgressService";
 
-    public static String WIPS_CACHE_FILE = "wips.json";
+    private static final String WIPS_CACHE_FILE = "wips.json";
+
+    public static final String WORKS_IN_PROGRESS = "worksInProgress";
+    public static final String WIPS_UPDATED = "wipsUpdated";
+    public static final String PROGRESS_URL = "https://www.brandonsanderson.com";
 
     public static void setWorksInProgress(Context context, String wipsStr) {
         try {

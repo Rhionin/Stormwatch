@@ -19,13 +19,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import static com.rhionin.brandonsanderson.ProgressService.PROGRESS_URL;
+import static com.rhionin.brandonsanderson.ProgressService.WIPS_UPDATED;
+
 public class WorksInProgressActivity extends AppCompatActivity {
 
-    private static final String PROGRESS_URL = "https://www.brandonsanderson.com";
     private static final String TAG = "WorksInProgressActivity";
-    
-    public static String WIPS_UPDATED = "wipsUpdated";
-    public static String WORKS_IN_PROGRESS = "worksInProgress";
+
     private boolean isReceiverRegistered;
     private BroadcastReceiver mWipsBroadcastReceiver;
 

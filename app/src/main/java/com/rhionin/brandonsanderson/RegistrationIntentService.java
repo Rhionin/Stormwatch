@@ -55,6 +55,7 @@ public class RegistrationIntentService extends IntentService {
     // [START subscribe_topics]
     private void subscribeTopics() {
         for (String topic : TOPICS) {
+            Log.d(TAG, "Subscribing to topic: "+topic);
             FirebaseMessaging.getInstance().subscribeToTopic(topic);
         }
     }

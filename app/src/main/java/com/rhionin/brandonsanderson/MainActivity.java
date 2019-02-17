@@ -59,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
         // Registering BroadcastReceiver
         registerReceiver();
 
+        // Receive progress update payload when notification came while app was in the background
+        // See https://firebase.google.com/docs/cloud-messaging/android/receive#handling_messages
+        if (getIntent().getExtras() != null) {
+            String wipsStr = getIntent().getExtras().getString("worksInProgress");
+            if (wipsStr != null) {
+                ProgressService.setWorksInProgress(this, wipsStr);
+            }
+        }
+
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
             Intent intent = new Intent(this, RegistrationIntentService.class);

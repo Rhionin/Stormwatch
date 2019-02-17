@@ -27,6 +27,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static com.rhionin.brandonsanderson.ProgressService.WIPS_CACHE_FILE;
+
 public class WorksInProgressActivity extends AppCompatActivity {
 
     private static final String PROGRESS_URL = "https://www.brandonsanderson.com";
@@ -35,7 +37,6 @@ public class WorksInProgressActivity extends AppCompatActivity {
     public static String PROGRESS_TOPIC = "/topics/progress";
     public static String WIPS_UPDATED = "wipsUpdated";
     public static String WORKS_IN_PROGRESS = "worksInProgress";
-    public static String WIPS_CACHE_FILE = "wips.json";
     private boolean isReceiverRegistered;
     private BroadcastReceiver mWipsBroadcastReceiver;
 
@@ -133,48 +134,12 @@ public class WorksInProgressActivity extends AppCompatActivity {
     }
 
     private void displayProgress() {
-        ProgressUpdate progress = getProgressUpdateFromFile();
+        ProgressUpdate progress = ProgressService.getProgressUpdateFromFile(this);
         if (progress != null) {
             displayProgress(progress);
         } else {
             getAndDisplayProgressFromWeb();
         }
-    }
-
-    private ProgressUpdate getProgressUpdateFromFile() {
-        ProgressUpdate progress = null;
-        try {
-            File wipsCache = new File(getCacheDir(), WIPS_CACHE_FILE);
-            if (wipsCache.exists()) {
-                FileInputStream inputStream = new FileInputStream(wipsCache);
-                StringBuilder builder = new StringBuilder();
-                int ch;
-                while((ch = inputStream.read()) != -1){
-                    builder.append((char)ch);
-                }
-                inputStream.close();
-
-                String wipsStr = builder.toString();
-                if (wipsStr.length() > 0) {
-
-                    try {
-                        ObjectMapper mapper = new ObjectMapper();
-                        WorkInProgress[] wips = mapper.readValue(wipsStr, WorkInProgress[].class);
-                        progress = new ProgressUpdate(wips);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                } else {
-                    Log.e(TAG, "No content in the wips cache file");
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return progress;
     }
 
     private void displayProgress(ProgressUpdate progress) {

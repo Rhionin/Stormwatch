@@ -2,7 +2,7 @@ package com.rhionin.brandonsanderson;
 
 public class ProgressUpdate {
 
-    private WorkInProgress[] wips   ;
+    private WorkInProgress[] wips;
 
     public ProgressUpdate() {
 

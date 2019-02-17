@@ -3,6 +3,7 @@ package com.rhionin.brandonsanderson;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Debug;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -13,7 +14,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
-    private static final String[] TOPICS = {"progress"};
+
+    public static final String PROGRESS_TOPIC = "progress";
+    public static final String DEV_PROGRESS_TOPIC = "devprogress";
 
     public RegistrationIntentService() {
         super(TAG);
@@ -54,9 +57,12 @@ public class RegistrationIntentService extends IntentService {
      */
     // [START subscribe_topics]
     private void subscribeTopics() {
-        for (String topic : TOPICS) {
-            Log.d(TAG, "Subscribing to topic: "+topic);
-            FirebaseMessaging.getInstance().subscribeToTopic(topic);
+        Log.d(TAG, "Subscribing to topic: "+PROGRESS_TOPIC);
+        FirebaseMessaging.getInstance().subscribeToTopic(PROGRESS_TOPIC);
+
+        if (Debug.isDebuggerConnected()) {
+            Log.d(TAG, "Subscribing to topic: "+DEV_PROGRESS_TOPIC);
+            FirebaseMessaging.getInstance().subscribeToTopic(DEV_PROGRESS_TOPIC);
         }
     }
     // [END subscribe_topics]

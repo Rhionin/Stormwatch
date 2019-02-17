@@ -5,7 +5,8 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import static com.rhionin.brandonsanderson.WorksInProgressActivity.PROGRESS_TOPIC;
+import static com.rhionin.brandonsanderson.RegistrationIntentService.DEV_PROGRESS_TOPIC;
+import static com.rhionin.brandonsanderson.RegistrationIntentService.PROGRESS_TOPIC;
 import static com.rhionin.brandonsanderson.WorksInProgressActivity.WORKS_IN_PROGRESS;
 
 public class MyFcmListenerService extends FirebaseMessagingService {
@@ -24,7 +25,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage message) {
         String from = message.getFrom();
         Map data = message.getData();
-        if (from.equals(PROGRESS_TOPIC)) {
+        if (from.equals(PROGRESS_TOPIC) || from.equals(DEV_PROGRESS_TOPIC)) {
             String wipsStr = data.get(WORKS_IN_PROGRESS).toString();
             ProgressService.setWorksInProgress(this, wipsStr);
         }

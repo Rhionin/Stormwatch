@@ -13,28 +13,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import static com.rhionin.brandonsanderson.ProgressService.WIPS_CACHE_FILE;
-
 public class WorksInProgressActivity extends AppCompatActivity {
 
     private static final String PROGRESS_URL = "https://www.brandonsanderson.com";
     private static final String TAG = "WorksInProgressActivity";
-
-    public static String PROGRESS_TOPIC = "/topics/progress";
+    
     public static String WIPS_UPDATED = "wipsUpdated";
     public static String WORKS_IN_PROGRESS = "worksInProgress";
     private boolean isReceiverRegistered;

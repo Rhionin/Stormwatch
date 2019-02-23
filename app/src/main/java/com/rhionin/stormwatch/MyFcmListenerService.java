@@ -1,5 +1,7 @@
 package com.rhionin.stormwatch;
 
+import android.os.Debug;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -25,7 +27,8 @@ public class MyFcmListenerService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage message) {
         String from = message.getFrom();
         Map data = message.getData();
-        if (from.equals(PROGRESS_TOPIC) || from.equals(DEV_PROGRESS_TOPIC)) {
+        boolean getDebugProgress = Debug.isDebuggerConnected() && from.equals(DEV_PROGRESS_TOPIC);
+        if (from.equals(PROGRESS_TOPIC) || getDebugProgress) {
             String wipsStr = data.get(WORKS_IN_PROGRESS).toString();
             ProgressService.setWorksInProgress(this, wipsStr);
         }

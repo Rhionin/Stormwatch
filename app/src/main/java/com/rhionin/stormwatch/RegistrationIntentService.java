@@ -1,4 +1,4 @@
-package com.rhionin.brandonsanderson;
+package com.rhionin.stormwatch;
 
 import android.app.IntentService;
 import android.content.Intent;

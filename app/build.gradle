@@ -2,13 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
-
     defaultConfig {
-        applicationId "com.rhionin.brandonsanderson"
+        applicationId "com.rhionin.stormwatch"
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 3
-        versionName "1.2.0"
+        versionName "2.0.0"
 
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -16,22 +15,28 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     packagingOptions {
         exclude 'LICENSE.txt'
+    }
+    buildToolsVersion '28.0.3'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // Testing dependencies
-//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-//    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-//    androidTestImplementation 'com.android.support:support-annotations:28.0.0'
+    //    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    //    androidTestImplementation 'com.android.support:support-annotations:28.0.0'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
-    implementation 'com.google.firebase:firebase-core:16.0.6' // TODO Stack overflow says this isn't explicitly needed. Try removing once the app is working again
-
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    // TODO Stack overflow says this isn't explicitly needed. Try removing once the app is working again
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:support-compat:28.0.0'
     implementation 'com.android.support:support-media-compat:28.0.0'
@@ -39,10 +44,8 @@ dependencies {
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
-
     implementation 'com.fasterxml.jackson.core:jackson-core:2.7.2'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.7.2'
-
     implementation 'org.jsoup:jsoup:1.8.3'
 }
 

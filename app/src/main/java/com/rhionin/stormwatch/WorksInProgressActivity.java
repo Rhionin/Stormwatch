@@ -1,4 +1,4 @@
-package com.rhionin.brandonsanderson;
+package com.rhionin.stormwatch;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,8 +19,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import static com.rhionin.brandonsanderson.ProgressService.PROGRESS_URL;
-import static com.rhionin.brandonsanderson.ProgressService.WIPS_UPDATED;
+import static com.rhionin.stormwatch.ProgressService.PROGRESS_URL;
+import static com.rhionin.stormwatch.ProgressService.WIPS_UPDATED;
 
 public class WorksInProgressActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.rhionin.brandonsanderson;
+package com.rhionin.stormwatch;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

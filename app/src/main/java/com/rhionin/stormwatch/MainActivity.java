@@ -1,4 +1,4 @@
-package com.rhionin.brandonsanderson;
+package com.rhionin.stormwatch;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import static com.rhionin.brandonsanderson.ProgressService.WORKS_IN_PROGRESS;
+import static com.rhionin.stormwatch.ProgressService.WORKS_IN_PROGRESS;
 
 public class MainActivity extends AppCompatActivity {
 

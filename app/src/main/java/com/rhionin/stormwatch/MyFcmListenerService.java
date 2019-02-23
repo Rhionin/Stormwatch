@@ -1,13 +1,13 @@
-package com.rhionin.brandonsanderson;
+package com.rhionin.stormwatch;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import static com.rhionin.brandonsanderson.ProgressService.WORKS_IN_PROGRESS;
-import static com.rhionin.brandonsanderson.RegistrationIntentService.DEV_PROGRESS_TOPIC;
-import static com.rhionin.brandonsanderson.RegistrationIntentService.PROGRESS_TOPIC;
+import static com.rhionin.stormwatch.ProgressService.WORKS_IN_PROGRESS;
+import static com.rhionin.stormwatch.RegistrationIntentService.DEV_PROGRESS_TOPIC;
+import static com.rhionin.stormwatch.RegistrationIntentService.PROGRESS_TOPIC;
 
 public class MyFcmListenerService extends FirebaseMessagingService {
 

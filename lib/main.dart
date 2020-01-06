@@ -119,7 +119,7 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> {
             Card(child: Column(
               children: <Widget>[
                 ListTile(title: Text('Book Four')),
-                LinearProgressIndicator(value: .1),
+                LinearProgressIndicator(value: 1),
               ],
             )),
           ],

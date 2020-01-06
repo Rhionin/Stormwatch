@@ -71,8 +71,8 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(
-            StormWatchIcons.bridge_four,
-            size: 60,
+          StormWatchIcons.bridge_four,
+          size: 60,
         ),
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
@@ -96,15 +96,32 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+//          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
+            Card(child: Column(
+              children: <Widget>[
+                ListTile(title: Text('Book One')),
+                LinearProgressIndicator(value: .25),
+              ],
+            )),
+            Card(child: Column(
+              children: <Widget>[
+                ListTile(title: Text('Book Two')),
+                LinearProgressIndicator(value: .5),
+              ],
+            )),
+            Card(child: Column(
+              children: <Widget>[
+                ListTile(title: Text('Book Three')),
+                LinearProgressIndicator(value: .75),
+              ],
+            )),
+            Card(child: Column(
+              children: <Widget>[
+                ListTile(title: Text('Book Four')),
+                LinearProgressIndicator(value: .1),
+              ],
+            )),
           ],
         ),
       ),

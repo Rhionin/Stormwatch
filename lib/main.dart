@@ -98,25 +98,29 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> {
           // horizontal).
 //          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Card(child: Column(
+            Card(
+                child: Column(
               children: <Widget>[
                 ListTile(title: Text('Book One')),
                 LinearProgressIndicator(value: .25),
               ],
             )),
-            Card(child: Column(
+            Card(
+                child: Column(
               children: <Widget>[
                 ListTile(title: Text('Book Two')),
                 LinearProgressIndicator(value: .5),
               ],
             )),
-            Card(child: Column(
+            Card(
+                child: Column(
               children: <Widget>[
                 ListTile(title: Text('Book Three')),
                 LinearProgressIndicator(value: .75),
               ],
             )),
-            Card(child: Column(
+            Card(
+                child: Column(
               children: <Widget>[
                 ListTile(title: Text('Book Four')),
                 LinearProgressIndicator(value: 1),

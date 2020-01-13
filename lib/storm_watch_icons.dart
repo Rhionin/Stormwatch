@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/StormWatchIcons.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 
@@ -20,5 +20,6 @@ class StormWatchIcons {
 
   static const _kFontFam = 'StormWatchIcons';
 
-  static const IconData bridge_four = const IconData(0xe800, fontFamily: _kFontFam);
+  static const IconData bridge_four =
+      const IconData(0xe800, fontFamily: _kFontFam);
 }

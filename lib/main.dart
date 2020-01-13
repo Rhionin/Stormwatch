@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stormwatch/storm_watch_icons.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 void main() => runApp(MyApp());
 
@@ -45,20 +46,46 @@ class WorksInProgressPage extends StatefulWidget {
 }
 
 class _WorksInProgressPageState extends State<WorksInProgressPage> {
-  List wips = new List();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+  @override
+  void initState() {
+    super.initState();
+    print("_WorksInProgressPageState.initState()");
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+//        _showItemDialog(message);
+      },
+//      onLaunch: (Map<String, dynamic> message) async {
+//        print("onLaunch: $message");
+//        _navigateToItemDetail(message);
+//      },
+//      onResume: (Map<String, dynamic> message) async {
+//        print("onResume: $message");
+//        _navigateToItemDetail(message);
+//      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
     });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+//      setState(() {
+//        _homeScreenText = "Push Messaging token: $token";
+//      });
+      print("Push Messaging token: $token");
+    });
+
+    _firebaseMessaging
+        .subscribeToTopic("devprogress");
   }
+
+  List wips = new List();
 
   @override
   Widget build(BuildContext context) {
@@ -129,11 +156,6 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

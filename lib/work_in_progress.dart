@@ -1,3 +1,5 @@
+import "dart:convert";
+
 class WorkInProgress {
   String title;
   int progress;
@@ -20,6 +22,9 @@ class WorkInProgress {
       : title = json['title'] ?? '',
         progress = json['progress'] ?? 0,
         prevProgress = json['prevProgress'];
+
+  WorkInProgress.fromJsonString(String jsonStr)
+      : this.fromJson(jsonDecode(jsonStr));
 
   int getProgress() {
     return progress;

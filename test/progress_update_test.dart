@@ -45,7 +45,7 @@ void main() {
 			'expected': [
 				WorkInProgress.withAllArgs("Book 1", 25, 0),
 				WorkInProgress.withAllArgs("Book 2", 50, 25),
-				WorkInProgress.withAllArgs("Book 3", 100, 0),
+				WorkInProgress.withAllArgs("Book 3", 100, null),
 			],
 		}];
 

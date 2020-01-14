@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stormwatch/work_in_progress.dart';
+import 'package:stormwatch/progress_update.dart';
 import 'package:stormwatch/storm_watch_icons.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -51,11 +53,21 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> {
   @override
   void initState() {
     super.initState();
-    print("_WorksInProgressPageState.initState()");
+
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
-//        _showItemDialog(message);
+
+        try {
+          var wips = worksInProgressFromMessage(message);
+          var wipCards = _worksInProgressToCards(wips);
+          setState(() {
+            _wipCards = wipCards;
+          });
+        } catch (e) {
+          print(e);
+        }
+
       },
 //      onLaunch: (Map<String, dynamic> message) async {
 //        print("onLaunch: $message");
@@ -75,17 +87,26 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> {
     });
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
-//      setState(() {
-//        _homeScreenText = "Push Messaging token: $token";
-//      });
       print("Push Messaging token: $token");
     });
 
-    _firebaseMessaging
-        .subscribeToTopic("devprogress");
+    _firebaseMessaging.subscribeToTopic("devprogress");
   }
 
-  List wips = new List();
+  List<Card> _wipCards = [];
+
+  List<Card> _worksInProgressToCards(List<WorkInProgress> worksInProgress) {
+    return worksInProgress.map((w) {
+      return Card(
+          child: Column(
+            children: <Widget>[
+              ListTile(title: Text(w.getTitle())),
+              LinearProgressIndicator(value: w.getProgress() / 100),
+            ],
+          ),
+      );
+    }).toList(growable: false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,37 +144,7 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-//          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Card(
-                child: Column(
-              children: <Widget>[
-                ListTile(title: Text('Book One')),
-                LinearProgressIndicator(value: .25),
-              ],
-            )),
-            Card(
-                child: Column(
-              children: <Widget>[
-                ListTile(title: Text('Book Two')),
-                LinearProgressIndicator(value: .5),
-              ],
-            )),
-            Card(
-                child: Column(
-              children: <Widget>[
-                ListTile(title: Text('Book Three')),
-                LinearProgressIndicator(value: .75),
-              ],
-            )),
-            Card(
-                child: Column(
-              children: <Widget>[
-                ListTile(title: Text('Book Four')),
-                LinearProgressIndicator(value: 1),
-              ],
-            )),
-          ],
+          children: _wipCards,
         ),
       ),
     );

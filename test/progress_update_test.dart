@@ -54,12 +54,12 @@ void main() {
 		cases.forEach((c) {
 			test(c['title'], () {
 				List expected = c['expected'];
-				Iterable<WorkInProgress> actualResult = worksInProgressFromMessage(c['message']);
+				List<WorkInProgress> actualResult = worksInProgressFromMessage(c['message']);
 
 				expect(actualResult.length, expected.length, reason: "Actual result length (${actualResult.length}) mismatches expected result length (${expected.length})");
 
 				for (int i = 0; i < actualResult.length; i++) {
-					WorkInProgress res = actualResult.elementAt(i);
+					WorkInProgress res = actualResult[i];
 					WorkInProgress exp = expected[i];
 
 					expect(res.getTitle(), exp.getTitle());

@@ -1,5 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stormwatch/WorkInProgress.dart';
+import 'package:stormwatch/work_in_progress.dart';
 import 'package:stormwatch/progress_update.dart';
 
 void main() {
@@ -13,7 +15,7 @@ void main() {
 			'title': 'empty worksInProgress',
 			'message': {
 				'data': {
-					'worksInProgress': [],
+					'worksInProgress': jsonEncode([]),
 				},
 			},
 			'expected': [],
@@ -21,9 +23,9 @@ void main() {
 			'title': 'one entry in worksInProgress',
 			'message': {
 				'data': {
-					'worksInProgress': [{
+					'worksInProgress': jsonEncode([{
 						"title":"Book 1", "progress":25, "prevProgress":0,
-					}],
+					}]),
 				},
 			},
 			'expected': [
@@ -33,13 +35,13 @@ void main() {
 			'title': 'many entries in worksInProgress',
 			'message': {
 				'data': {
-					'worksInProgress': [{
+					'worksInProgress': jsonEncode([{
 						"title":"Book 1", "progress":25, "prevProgress":0,
 					}, {
 						"title":"Book 2", "progress":50, "prevProgress":25,
 					}, {
 						"title":"Book 3", "progress":100,
-					}],
+					}]),
 				},
 			},
 			'expected': [

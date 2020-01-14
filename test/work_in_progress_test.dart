@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:stormwatch/work_in_progress.dart';
+import 'dart:convert';
 
 void main() {
 	group('Work In Progress from JSON', () {
@@ -39,15 +40,15 @@ void main() {
 	group('Work In Progress from JSON string', () {
 		var cases = [{
 			'title': 'Empty JSON',
-			'jsonStr': '{}',
+			'jsonStr': jsonEncode({}),
 			'expected': WorkInProgress.withAllArgs('', 0, null),
 		}, {
 			'title': 'Full object',
-			'jsonStr': '{"title":"Book 1", "progress":50, "prevProgress": 25}',
+			'jsonStr': jsonEncode({"title":"Book 1", "progress":50, "prevProgress": 25}),
 			'expected': WorkInProgress.withAllArgs('Book 1', 50, 25),
 		}, {
 			'title': 'Input has title and progress only',
-			'jsonStr': '{"title":"Book 1", "progress": 50}',
+			'jsonStr': jsonEncode({"title":"Book 1", "progress": 50}),
 			'expected': WorkInProgress.withAllArgs('Book 1', 50, null),
 		}];
 

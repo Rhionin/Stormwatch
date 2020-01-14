@@ -19,7 +19,7 @@ class WorkInProgress {
   WorkInProgress.fromJson(Map<String, dynamic> json)
       : title = json['title'] ?? '',
         progress = json['progress'] ?? 0,
-        prevProgress = json['prevProgress'] ?? 0;
+        prevProgress = json['prevProgress'];
 
   int getProgress() {
     return progress;

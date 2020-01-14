@@ -6,7 +6,7 @@ void main() {
 		var cases = [{
 			'title': 'Empty JSON',
 			'json': Map<String, dynamic>(),
-			'expected': WorkInProgress.withAllArgs('', 0, 0),
+			'expected': WorkInProgress.withAllArgs('', 0, null),
 		}, {
 			'title': 'Full object',
 			'json': {
@@ -21,7 +21,7 @@ void main() {
 				'title': 'Book 1',
 				'progress': 50,
 			},
-			'expected': WorkInProgress.withAllArgs('Book 1', 50, 0),
+			'expected': WorkInProgress.withAllArgs('Book 1', 50, null),
 		}];
 
 		cases.forEach((c) {

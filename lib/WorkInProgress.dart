@@ -10,6 +10,17 @@ class WorkInProgress {
     this.progress = progress;
   }
 
+  WorkInProgress.withAllArgs(String title, int progress, int prevProgress) {
+    this.title = title;
+    this.progress = progress;
+    this.prevProgress = prevProgress;
+  }
+
+  WorkInProgress.fromJson(Map<String, dynamic> json)
+      : title = json['title'] ?? '',
+        progress = json['progress'] ?? 0,
+        prevProgress = json['prevProgress'] ?? 0;
+
   int getProgress() {
     return progress;
   }

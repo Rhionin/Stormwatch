@@ -151,6 +151,8 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 		});
 	}
 
+	final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+
 	@override
 	Widget build(BuildContext context) {
 		// This method is rerun every time setState is called, for instance as done
@@ -170,20 +172,22 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 				title: Text(widget.title),
 			),
 			body: new RefreshIndicator(
+				key: _refreshIndicatorKey,
 				onRefresh: _refresh,
 				child: ListView(
 					children: _wipCards,
 				),
 			),
-//			floatingActionButton: FloatingActionButton(
-//				onPressed: _refresh,
-//				child: Icon(Icons.refresh),
-//				backgroundColor: Colors.green,
-//			),
+			floatingActionButton: FloatingActionButton(
+				onPressed: _refresh,
+				child: Icon(Icons.refresh),
+				backgroundColor: Colors.green,
+			),
 		);
 	}
 
 	Future<void> _refresh() async {
+		_refreshIndicatorKey.currentState.show();
 		List<WorkInProgress> wips = await getWorksInProgressFromWebsite();
 		setWorksInProgress(wips);
 		_renderWips(wips);

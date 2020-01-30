@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:stormwatch/work_in_progress.dart';
-import 'package:stormwatch/progress_update.dart';
 import 'package:stormwatch/progress_storage.dart';
 import 'package:stormwatch/website_client.dart';
 import 'package:stormwatch/storm_watch_icons.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
-void main() => runApp(MyApp());
+var mainApp = MyApp();
+void main() => runApp(mainApp);
 
 Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
-	final prefs = await SharedPreferences.getInstance();
-	prefs.setString("backgroundMessage", json.encode(message));
-
-	if (message.containsKey('data')) {
-		// Handle data message
-		final dynamic data = message['data'];
-		print("data: $data");
+	print("backgroundhandler: $message");
+	String wipsStr = message['data']['worksInProgress'];
+	if (wipsStr != null) {
+		await setWorksInProgressStr(message['data']['worksInProgress']);
 	}
-
-	if (message.containsKey('notification')) {
-		// Handle notification message
-		final dynamic notification = message['notification'];
-		print("notification: $notification");
-	}
-
-	// Or do other work.
-	var wipsStr = prefs.getString("worksInProgress");
-	print("backgroundhandler wipsStr: $wipsStr");
 }
 
 class MyApp extends StatelessWidget {
@@ -82,16 +67,15 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 		_firebaseMessaging.configure(
 			onMessage: (Map<String, dynamic> message) async {
 				print("onMessage: $message");
-				await setWorksInProgressStr(message['data']['worksInProgress']);
-				_getAndRenderWips();
+				_handleWorksInProgressMessage(message);
 			},
 			onLaunch: (Map<String, dynamic> message) async {
 				print("onLaunch: $message");
-				setWorksInProgressStr(message['data']['worksInProgress']);
+				_handleWorksInProgressMessage(message);
 			},
 			onResume: (Map<String, dynamic> message) async {
 				print("onResume: $message");
-				setWorksInProgressStr(message['data']['worksInProgress']);
+				_handleWorksInProgressMessage(message);
 			},
 			onBackgroundMessage: myBackgroundMessageHandler,
 		);
@@ -113,19 +97,15 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 		_getAndRenderWips();
 	}
 
-	List<Card> _wipCards = [];
-//  List<Card> _wipCards = [Card(
-//    child: Column(
-//      children: <Widget>[
-//        ListTile(title: Text("Book 1!!")),
-//        LinearProgressIndicator(
-//            value: 1,
-//            backgroundColor: Colors.green,
-//        ),
-//      ],
-//    )
-//  )];
+	void _handleWorksInProgressMessage(Map<String, dynamic> message) async {
+		String wipsStr = message['data']['worksInProgress'];
+		if (wipsStr != null) {
+			await setWorksInProgressStr(message['data']['worksInProgress']);
+			_getAndRenderWips();
+		}
+	}
 
+	List<Card> _wipCards = [];
 	List<Card> _worksInProgressToCards(List<WorkInProgress> worksInProgress) {
 
 		return worksInProgress.map((w) {

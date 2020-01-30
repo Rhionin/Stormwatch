@@ -33,7 +33,7 @@ void main() {
 
 		cases.forEach((c) {
 			test(c['title'], () async {
-				SharedPreferences.setMockInitialValues({}); //set values here
+				SharedPreferences.setMockInitialValues({});
 
 				String expectedWips = c['expected'];
 				List<WorkInProgress> wips = c['worksInProgress'];
@@ -77,10 +77,9 @@ void main() {
 
 		cases.forEach((c) {
 			test(c['title'], () async {
-				SharedPreferences prefs = await SharedPreferences.getInstance();
 				SharedPreferences.setMockInitialValues({
 					'worksInProgress': c['worksInProgress'],
-				}); //set values here
+				});
 
 				List<WorkInProgress>expectedWips = c['expected'];
 

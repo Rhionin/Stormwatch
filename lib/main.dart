@@ -169,37 +169,24 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 				// the App.build method, and use it to set our appbar title.
 				title: Text(widget.title),
 			),
-			body: Center(
-				// Center is a layout widget. It takes a single child and positions it
-				// in the middle of the parent.
-				child: Column(
-					// Column is also a layout widget. It takes a list of children and
-					// arranges them vertically. By default, it sizes itself to fit its
-					// children horizontally, and tries to be as tall as its parent.
-					//
-					// Invoke "debug painting" (press "p" in the console, choose the
-					// "Toggle Debug Paint" action from the Flutter Inspector in Android
-					// Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-					// to see the wireframe for each widget.
-					//
-					// Column has various properties to control how it sizes itself and
-					// how it positions its children. Here we use mainAxisAlignment to
-					// center the children vertically; the main axis here is the vertical
-					// axis because Columns are vertical (the cross axis would be
-					// horizontal).
+			body: new RefreshIndicator(
+				onRefresh: _refresh,
+				child: ListView(
 					children: _wipCards,
 				),
 			),
-			floatingActionButton: FloatingActionButton(
-				onPressed: () async {
-					List<WorkInProgress> wips = await getWorksInProgressFromWebsite();
-					setWorksInProgress(wips);
-					_renderWips(wips);
-				},
-				child: Icon(Icons.refresh),
-				backgroundColor: Colors.green,
-			),
+//			floatingActionButton: FloatingActionButton(
+//				onPressed: _refresh,
+//				child: Icon(Icons.refresh),
+//				backgroundColor: Colors.green,
+//			),
 		);
+	}
+
+	Future<void> _refresh() async {
+		List<WorkInProgress> wips = await getWorksInProgressFromWebsite();
+		setWorksInProgress(wips);
+		_renderWips(wips);
 	}
 }
 

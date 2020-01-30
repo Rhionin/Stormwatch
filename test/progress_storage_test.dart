@@ -15,7 +15,7 @@ void main() {
 			'worksInProgress': <WorkInProgress>[
 				new WorkInProgress(),
 			],
-			'expected': '[{"title":"","progress":0,"prevProgress":null}]',
+			'expected': '[{"title":"","progress":0,"prevProgress":0}]',
 		}, {
 			'title': 'one element',
 			'worksInProgress': <WorkInProgress>[
@@ -26,9 +26,9 @@ void main() {
 			'title': 'many elements',
 			'worksInProgress': <WorkInProgress>[
 				new WorkInProgress(title: "Book 1", progress: 50, prevProgress: 0),
-				new WorkInProgress(title: "Book 2", progress: 100, prevProgress: null),
+				new WorkInProgress(title: "Book 2", progress: 100, prevProgress: 0),
 			],
-			'expected': '[{"title":"Book 1","progress":50,"prevProgress":0},{"title":"Book 2","progress":100,"prevProgress":null}]',
+			'expected': '[{"title":"Book 1","progress":50,"prevProgress":0},{"title":"Book 2","progress":100,"prevProgress":0}]',
 		}];
 
 		cases.forEach((c) {
@@ -51,6 +51,10 @@ void main() {
 	group('getWorksInProgress', () {
 
 		var cases = [{
+			'title': 'null value in storage',
+			'expected': <WorkInProgress>[],
+			'worksInProgress': null,
+		}, {
 			'title': 'empty list',
 			'expected': <WorkInProgress>[],
 			'worksInProgress': '[]',
@@ -70,7 +74,7 @@ void main() {
 			'title': 'many elements',
 			'expected': <WorkInProgress>[
 				new WorkInProgress(title: "Book 1", progress: 50, prevProgress: 0),
-				new WorkInProgress(title: "Book 2", progress: 100, prevProgress: null),
+				new WorkInProgress(title: "Book 2", progress: 100, prevProgress: 0),
 			],
 			'worksInProgress': '[{"title":"Book 1","progress":50,"prevProgress":0},{"title":"Book 2","progress":100,"prevProgress":null}]',
 		}];

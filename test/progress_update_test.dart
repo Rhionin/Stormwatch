@@ -29,7 +29,7 @@ void main() {
 				},
 			},
 			'expected': [
-				WorkInProgress.withAllArgs("Book 1", 25, 0),
+				WorkInProgress(title: "Book 1", progress: 25, prevProgress: 0),
 			],
 		}, {
 			'title': 'many entries in worksInProgress',
@@ -45,9 +45,9 @@ void main() {
 				},
 			},
 			'expected': [
-				WorkInProgress.withAllArgs("Book 1", 25, 0),
-				WorkInProgress.withAllArgs("Book 2", 50, 25),
-				WorkInProgress.withAllArgs("Book 3", 100, null),
+				WorkInProgress(title: "Book 1", progress: 25, prevProgress: 0),
+				WorkInProgress(title: "Book 2", progress: 50, prevProgress: 25),
+				WorkInProgress(title: "Book 3", progress: 100, prevProgress: 0),
 			],
 		}];
 

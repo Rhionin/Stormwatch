@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stormwatch/work_in_progress.dart';
 import 'package:stormwatch/progress_update.dart';
+import 'package:stormwatch/progress_storage.dart';
+import 'package:stormwatch/website_client.dart';
 import 'package:stormwatch/storm_watch_icons.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -80,21 +82,16 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 		_firebaseMessaging.configure(
 			onMessage: (Map<String, dynamic> message) async {
 				print("onMessage: $message");
-				final prefs = await SharedPreferences.getInstance();
-				prefs.setString("worksInProgress", json.encode(message));
-				_renderWipsFromStorage();
+				await setWorksInProgressStr(message['data']['worksInProgress']);
+				_getAndRenderWips();
 			},
 			onLaunch: (Map<String, dynamic> message) async {
-				final prefs = await SharedPreferences.getInstance();
-				prefs.setString("worksInProgress", json.encode(message));
 				print("onLaunch: $message");
-				_renderWipsFromStorage();
+				setWorksInProgressStr(message['data']['worksInProgress']);
 			},
 			onResume: (Map<String, dynamic> message) async {
-				final prefs = await SharedPreferences.getInstance();
-				prefs.setString("worksInProgress", json.encode(message));
 				print("onResume: $message");
-				_renderWipsFromStorage();
+				setWorksInProgressStr(message['data']['worksInProgress']);
 			},
 			onBackgroundMessage: myBackgroundMessageHandler,
 		);
@@ -113,7 +110,7 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 		_firebaseMessaging.subscribeToTopic("devprogress");
 		_firebaseMessaging.subscribeToTopic("progress");
 
-		_renderWipsFromStorage();
+		_getAndRenderWips();
 	}
 
 	List<Card> _wipCards = [];
@@ -151,6 +148,27 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 				),
 			);
 		}).toList(growable: false);
+	}
+
+	void _getAndRenderWips() async {
+		List<WorkInProgress> wips = await _getWips();
+		_renderWips(wips);
+	}
+
+	Future<List<WorkInProgress>> _getWips() async {
+		List<WorkInProgress> wips = await getWorksInProgress();
+		if (wips.length == 0) {
+			wips = await getWorksInProgressFromWebsite();
+			setWorksInProgress(wips);
+		}
+		return wips;
+	}
+
+	void _renderWips(List<WorkInProgress> wips) {
+		List<Card> wipCards = _worksInProgressToCards(wips);
+		setState(() {
+			_wipCards = wipCards;
+		});
 	}
 
 	@override
@@ -192,23 +210,20 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 					children: _wipCards,
 				),
 			),
+			floatingActionButton: FloatingActionButton(
+				onPressed: () async {
+					List<WorkInProgress> wips = await getWorksInProgressFromWebsite();
+					setWorksInProgress(wips);
+					_renderWips(wips);
+				},
+				child: Icon(Icons.refresh),
+				backgroundColor: Colors.green,
+			),
 		);
 	}
+}
 
-	void _renderWipsFromStorage() async {
-		final prefs = await SharedPreferences.getInstance();
-		String wipsStrFromStorage = prefs.getString("worksInProgress");
-		if (wipsStrFromStorage != null) {
-			Map<String, dynamic> wipsMessage = json.decode(wipsStrFromStorage);
-			try {
-				var wips = worksInProgressFromMessage(wipsMessage);
-				var wipCards = _worksInProgressToCards(wips);
-				setState(() {
-					_wipCards = wipCards;
-				});
-			} catch (e) {
-				print(e);
-			}
-		}
-	}
+void debugPrintWrapped(String text) {
+	final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+	pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }

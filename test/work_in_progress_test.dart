@@ -7,7 +7,7 @@ void main() {
 		var cases = [{
 			'title': 'Empty JSON',
 			'json': Map<String, dynamic>(),
-			'expected': WorkInProgress.withAllArgs('', 0, null),
+			'expected': WorkInProgress(title: '', progress: 0, prevProgress: 0),
 		}, {
 			'title': 'Full object',
 			'json': {
@@ -15,14 +15,14 @@ void main() {
 				'progress': 50,
 				'prevProgress': 25,
 			},
-			'expected': WorkInProgress.withAllArgs('Book 1', 50, 25),
+			'expected': WorkInProgress(title: 'Book 1', progress: 50, prevProgress: 25),
 		}, {
 			'title': 'Input has title and progress only',
 			'json': {
 				'title': 'Book 1',
 				'progress': 50,
 			},
-			'expected': WorkInProgress.withAllArgs('Book 1', 50, null),
+			'expected': WorkInProgress(title: 'Book 1', progress: 50, prevProgress: 0),
 		}];
 
 		cases.forEach((c) {
@@ -41,15 +41,15 @@ void main() {
 		var cases = [{
 			'title': 'Empty JSON',
 			'jsonStr': jsonEncode({}),
-			'expected': WorkInProgress.withAllArgs('', 0, null),
+			'expected': WorkInProgress(title: '', progress: 0, prevProgress: 0),
 		}, {
 			'title': 'Full object',
 			'jsonStr': jsonEncode({"title":"Book 1", "progress":50, "prevProgress": 25}),
-			'expected': WorkInProgress.withAllArgs('Book 1', 50, 25),
+			'expected': WorkInProgress(title: 'Book 1', progress: 50, prevProgress: 25),
 		}, {
 			'title': 'Input has title and progress only',
 			'jsonStr': jsonEncode({"title":"Book 1", "progress": 50}),
-			'expected': WorkInProgress.withAllArgs('Book 1', 50, null),
+			'expected': WorkInProgress(title: 'Book 1', progress: 50, prevProgress: 0),
 		}];
 
 		cases.forEach((c) {

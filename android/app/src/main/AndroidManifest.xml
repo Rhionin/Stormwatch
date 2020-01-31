@@ -7,8 +7,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name=".Application"
-        android:label="stormwatch"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Stormwatch"
+        android:icon="@mipmap/bridge_four">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

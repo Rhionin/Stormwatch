@@ -109,8 +109,6 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 	List<Card> _worksInProgressToCards(List<WorkInProgress> worksInProgress) {
 
 		return worksInProgress.map((w) {
-			String wipText = w.getTitle();
-
 			String progressText;
 			if (w.getPrevProgress() != 0) {
 				progressText = "(" + w.getPrevProgress().toString() + "% -> " + w.getProgress().toString() + "%)";
@@ -123,7 +121,7 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 				child: Column(
 					children: <Widget>[
 						ListTile(
-							title: Text(wipText),
+							title: Text(w.getTitle()),
 							trailing: Text(progressText),
 							contentPadding: EdgeInsets.symmetric(
 								horizontal: 15.0,

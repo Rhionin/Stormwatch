@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
 				// or simply save your changes to "hot reload" in a Flutter IDE).
 				// Notice that the counter didn't reset back to zero; the application
 				// is not restarted.
-				primarySwatch: Colors.blue,
+				primarySwatch: Colors.teal,
 			),
 			home: WorksInProgressPage(),
 		);
@@ -110,22 +110,36 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 
 		return worksInProgress.map((w) {
 			String wipText = w.getTitle();
-			// TODO Right-align percentage text
+
+			String progressText;
 			if (w.getPrevProgress() != 0) {
-				wipText += " (" + w.getPrevProgress().toString() + "% -> " + w.getProgress().toString() + "%)";
+				progressText = "(" + w.getPrevProgress().toString() + "% -> " + w.getProgress().toString() + "%)";
 			} else {
-				wipText += " (" + w.getProgress().toString() + "%)";
+				progressText = "(" + w.getProgress().toString() + "%)";
 			}
 
 			return Card(
+				clipBehavior: Clip.antiAlias,
 				child: Column(
 					children: <Widget>[
-						ListTile(title: Text(wipText)),
+						ListTile(
+							title: Text(wipText),
+							trailing: Text(progressText),
+							contentPadding: EdgeInsets.symmetric(
+								horizontal: 15.0,
+								vertical: 5.0,
+							),
+						),
 						LinearProgressIndicator(
 							value: w.getProgress() / 100,
 						),
 					],
 				),
+				margin: EdgeInsets.symmetric(
+					horizontal: 15.0,
+					vertical: 12.0,
+				),
+				elevation: 10.0,
 			);
 		}).toList(growable: false);
 	}
@@ -161,6 +175,7 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 		// The Flutter framework has been optimized to make rerunning build methods
 		// fast, so that you can just rebuild anything that needs updating rather
 		// than having to individually change instances of widgets.
+
 		return Scaffold(
 			appBar: AppBar(
 				leading: Icon(
@@ -176,12 +191,12 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 				onRefresh: _refresh,
 				child: ListView(
 					children: _wipCards,
+					padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
 				),
 			),
 			floatingActionButton: FloatingActionButton(
 				onPressed: _refresh,
 				child: Icon(Icons.refresh),
-				backgroundColor: Colors.green,
 			),
 		);
 	}

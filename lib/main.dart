@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stormwatch/colors.dart';
 import 'package:stormwatch/work_in_progress.dart';
 import 'package:stormwatch/progress_storage.dart';
 import 'package:stormwatch/website_client.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
 				// or simply save your changes to "hot reload" in a Flutter IDE).
 				// Notice that the counter didn't reset back to zero; the application
 				// is not restarted.
-				primarySwatch: Colors.teal,
+				primarySwatch: kholinBlue,
 			),
 			home: WorksInProgressPage(),
 		);

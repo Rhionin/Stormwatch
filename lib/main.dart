@@ -92,7 +92,7 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 			print("Push Messaging token: $token");
 		});
 
-		_firebaseMessaging.subscribeToTopic("flutter_devprogress");
+//		_firebaseMessaging.subscribeToTopic("flutter_devprogress");
 		_firebaseMessaging.subscribeToTopic("flutter_progress");
 
 		_getAndRenderWips();

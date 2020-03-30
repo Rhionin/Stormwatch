@@ -5,6 +5,7 @@ import 'package:stormwatch/progress_storage.dart';
 import 'package:stormwatch/website_client.dart';
 import 'package:stormwatch/storm_watch_icons.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 var mainApp = MyApp();
 void main() => runApp(mainApp);
@@ -92,7 +93,6 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 			print("Push Messaging token: $token");
 		});
 
-//		_firebaseMessaging.subscribeToTopic("flutter_devprogress");
 		_firebaseMessaging.subscribeToTopic("flutter_progress");
 
 		_getAndRenderWips();
@@ -200,11 +200,45 @@ class _WorksInProgressPageState extends State<WorksInProgressPage> with SingleTi
 		);
 	}
 
+	int refreshes = 0;
+	bool refreshing = false;
 	Future<void> _refresh() async {
+		if (refreshing) {
+			return;
+		}
+
+		refreshing = true;
+		refreshes++;
+		print("Refreshes: $refreshes");
+		if (refreshes % 5 == 0) {
+			_toggleDeveloperMode();
+		}
+
 		_refreshIndicatorKey.currentState.show();
 		List<WorkInProgress> wips = await getWorksInProgressFromWebsite();
 		setWorksInProgress(wips);
 		_renderWips(wips);
+
+		refreshing = false;
+	}
+
+	bool developerMode = false;
+	void _toggleDeveloperMode() {
+		developerMode = !developerMode;
+		if (developerMode) {
+			_firebaseMessaging.subscribeToTopic("flutter_devprogress");
+		} else {
+			_firebaseMessaging.unsubscribeFromTopic("flutter_devprogress");
+		}
+		Fluttertoast.showToast(
+			msg: "Developer mode " + (developerMode ? "enabled" : "disabled"),
+			toastLength: Toast.LENGTH_SHORT,
+			gravity: ToastGravity.CENTER,
+			timeInSecForIosWeb: 1,
+			backgroundColor: Colors.green,
+			textColor: Colors.white,
+			fontSize: 16.0
+		);
 	}
 }
 
